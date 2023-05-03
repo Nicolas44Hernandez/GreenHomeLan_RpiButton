@@ -1,4 +1,4 @@
-""" Server camera errors """
+""" Server Button errors """
 
 from enum import Enum
 

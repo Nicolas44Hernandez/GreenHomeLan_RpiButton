@@ -19,10 +19,10 @@ def create_app(
     """Create the Flask app"""
 
     # Create app Flask
-    app = Flask("Server Camera")
+    app = Flask("Server Button")
 
     # Get configuration files
-    app_config = path.join(config_dir, "server-camera-config.yml")
+    app_config = path.join(config_dir, "server-button-config.yml")
 
     logging_config = path.join(config_dir, "logging-config.yml")
 

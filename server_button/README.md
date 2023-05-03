@@ -10,7 +10,6 @@ Use raspi-config to configure the RPI
 ```bash
 sudo raspi-config
 ```
-- Configure the camera interface
 - Configure the SSH interface
 - Connect to your Wi-Fi network (you must have an internet connection)
 
