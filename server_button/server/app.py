@@ -9,7 +9,6 @@ from .managers.thread_manager import thread_manager_service
 from .managers.mqtt_manager import mqtt_manager_service
 from .managers.button_manager import button_manager_service
 from .managers.wifi_connection_manager import wifi_connection_manager_service
-from .common import ServerButtonException, handle_server_button_exception
 
 logger = logging.getLogger(__name__)
 
