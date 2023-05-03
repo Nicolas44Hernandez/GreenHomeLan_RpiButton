@@ -1,0 +1,86 @@
+version: 1
+disable_existing_loggers: true
+
+formatters:
+  default:
+    format: "%(asctime)s [%(threadName)s] [%(levelname)s] %(name)s: %(message)s"
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: default
+
+  app:
+    class: logging.handlers.RotatingFileHandler
+    formatter: default
+    filename: logs/app.log
+    maxBytes: 52428800 # 50 Megabytes
+    backupCount: 1
+
+  thread:
+    class: logging.handlers.RotatingFileHandler
+    formatter: default
+    filename: logs/thread.log
+    maxBytes: 52428800 # 50 Megabytes
+    backupCount: 1
+
+  mqtt:
+    class: logging.handlers.RotatingFileHandler
+    formatter: default
+    filename: logs/mqtt.log
+    maxBytes: 52428800 # 50 Megabytes
+    backupCount: 1
+
+  button:
+    class: logging.handlers.RotatingFileHandler
+    formatter: default
+    filename: logs/button.log
+    maxBytes: 52428800 # 50 Megabytes
+    backupCount: 1
+
+  wifi_connection:
+    class: logging.handlers.RotatingFileHandler
+    formatter: default
+    filename: logs/wifi_connection.log
+    maxBytes: 52428800 # 50 Megabytes
+    backupCount: 1
+
+root:
+  level: WARN
+  handlers: [console]
+
+loggers:
+  server.app:
+    level: INFO
+    handlers: [app]
+    propagate: no
+
+  server.managers.mqtt_manager:
+    level: INFO
+    handlers: [console]
+    propagate: no
+
+  server.managers.thread_manager:
+    level: INFO
+    handlers: [console]
+    propagate: no
+
+  server.managers.button_manager:
+    level: INFO
+    handlers: [console]
+    propagate: no
+
+  server.interfaces.mqtt_interface:
+    level: INFO
+    handlers: [console]
+    propagate: no
+
+  server.interfaces.thread_interface:
+    level: INFO
+    handlers: [console]
+    propagate: no
+
+  server.interfaces.gpio_interface:
+    level: INFO
+    handlers: [console]
+    propagate: no
