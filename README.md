@@ -9,6 +9,7 @@ Button to notify something via Wifi over MQTT or via Thread to the orchestrator
 This use case aims to show how a connected object can use the Wifi / Thread tecnology to notify an event
 
 ## **Topology**
+TODO: update image
 ![Topology](images/general_topology.png)
 
 ## [**rpi_box**](https://github.com/Nicolas44Hernandez/GreenHomeLan_RpiBox)
@@ -26,7 +27,7 @@ Currently, for demo purposes, three of its relays are used as a visual notificat
 Run a web server where connected users receive notifications and have access to the live video stream from the rpi_camera
 This module is not part of the local network, it simulates a cloud web service.
 
-## **rpi_camera**(https://github.com/Nicolas44Hernandez/GreenHomeLan_RpiCamera)
+## [**rpi_camera**](https://github.com/Nicolas44Hernandez/GreenHomeLan_RpiCamera)
 Connected object composed a doorbell, a camera and a presence sensor. This smart doorbell sends a notification and the live video stream to the cloud server (rpi_cloud) if someone rings the bell or the presence sensor detects something unusual.
 ## **rpi_button**
 Connected object composed a button. This emergency smart button sends a resiliant notification to the cloud server (rpi_cloud) via Wifi / Thread
