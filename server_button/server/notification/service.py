@@ -51,7 +51,7 @@ class AlarmNotifier:
         logger.info(f"Sending notification via Thread")
 
         if alarm_type == "emergency":
-            data_to_send = f"al_em_bt"
+            data_to_send = f"al_bt_em"
         else:
             return False
         return thread_manager_service.send_thread_message_to_border_router(data_to_send)
