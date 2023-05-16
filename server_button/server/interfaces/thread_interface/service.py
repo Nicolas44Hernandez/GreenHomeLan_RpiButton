@@ -3,7 +3,6 @@ Thread interface service
 """
 import logging
 import time
-from server.common import ServerCameraException, ErrorCode
 import serial
 
 logger = logging.getLogger(__name__)
