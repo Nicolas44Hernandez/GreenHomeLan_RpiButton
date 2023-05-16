@@ -28,8 +28,12 @@ THREAD_MESSAGES: server_button/server/config/thread-messages.yml
 # Peripherals configuration
 PERIPHERALS_BUTTON: 21
 WIFI_CONNECTION_STATUS_POLL_PERIOD_IN_SECS: 1
+MQTT_ALARM_NOTIFICATION_TOPIC: alarm/notification
 
 # RPI BOX SERVER CONFIGURATION
 RPI_BOX_IP: 192.168.1.23
 RPI_BOX_PORT: 5000
 RPI_BOX_THREAD_PATH: thread/setup
+
+# Test connection config
+TEST_CONNETION_IP: 192.168.1.1
