@@ -15,7 +15,7 @@ class ButtonManager:
     """Manager for Button peripheral"""
 
     gpio_interface: GpioButtonInterface
-    thread_commands = {}
+    therad_messages = {}
 
     def __init__(self, app: Flask = None) -> None:
         if app is not None:
@@ -38,7 +38,7 @@ class ButtonManager:
 
         with open(thread_yaml_file) as stream:
             try:
-                self.thread_commands = yaml.safe_load(stream)
+                self.therad_messages = yaml.safe_load(stream)
             except yaml.YAMLError as exc:
                 raise ServerButtonException(ErrorCode.THREAD_MESSAGES_FILE_ERROR)
 
@@ -50,12 +50,12 @@ class ButtonManager:
 
         # If Wifi if not active, send thread command to activate it
         if not wifi_connection_manager_service.connected:
-            # wifi_on_command = self.wifi_thread_commands["WIFI"]["BANDS"]["5GHz"][True]
-            logger.info(f"Not connected to Wifi")
-            #thread_manager_service.send_thread_message_to_border_router(wifi_on_command)
-            #self.set_wifi_off_timer()
+            thread_emergency_message = self.therad_messages["ALARM"]
+            logger.info(f"Not connected to Wifi sending emergency message via Thread")
+            thread_manager_service.send_thread_message_to_border_router(thread_emergency_message)
         else:
-            logger.info("Already connected to Wifi")
+            logger.info("Already connected to Wifi, sending emergency message via WIFI")
+            #TODO: Send notification to cloud (?)
 
 
 button_manager_service: ButtonManager = ButtonManager()

@@ -3,6 +3,7 @@ Thread interface service
 """
 import logging
 import time
+from server.common import ServerCameraException, ErrorCode
 import serial
 
 logger = logging.getLogger(__name__)
@@ -35,13 +36,9 @@ class ThreadNode:
 
         self.thread_udp_port = thread_udp_port
         self.running = False
+        self.dataset_key = {}
 
-    def setup_thread_node(
-        self,
-        ipv6_otbr: str,
-        ipv6_mesh: str,
-        dataset_key: str
-    ) -> bool:
+    def setup_thread_node(self, ipv6_otbr: str, ipv6_mesh: str, dataset_key: str) -> bool:
         """Thread node configuration and setup"""
 
         logger.info("Thread node setup")
@@ -56,6 +53,8 @@ class ThreadNode:
         try:
             # join Thread network
             logger.info("Join thread network")
+            self.send_serial_command(f"ifconfig down")
+            self.send_serial_command(f"udp close")
             self.send_serial_command(f"dataset set active {self.dataset_key}")
             self.send_serial_command(f"ifconfig up")
             self.send_serial_command(f"thread start")
@@ -73,16 +72,14 @@ class ThreadNode:
             # Open UDP connection
             logger.info("Ope udp port")
             self.send_serial_command(f"udp open")
-            self.send_serial_command(
-                f"udp connect {self.ipv6_mesh} {self.thread_udp_port}")
+            self.send_serial_command(f"udp connect {self.ipv6_mesh} {self.thread_udp_port}")
 
             self.running = True
             logger.info(f"Thread Node running")
             return True
         except:
             self.running = False
-            logger.error(
-                f"Error in thread network setup, Thread Node is not running")
+            logger.error(f"Error in thread network setup, Thread Node is not running")
             return False
 
     def send_serial_command(self, command: str):
@@ -105,7 +102,7 @@ class ThreadNode:
             logger.info(f"Command: {command.strip()}")
             logger.info(f"Response: {response}")
             return True, response
-        except:
+        except Exception as e:
             logger.info(f"Error sending command")
             return False, None
 
