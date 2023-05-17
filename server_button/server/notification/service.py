@@ -50,7 +50,7 @@ class AlarmNotifier:
         """Send Thread message to notify alarm"""
         logger.info(f"Sending notification via Thread")
 
-        if alarm_type == "emergency":
+        if alarm_type == "emergency_btn":
             data_to_send = f"al_bt_em"
         else:
             return False

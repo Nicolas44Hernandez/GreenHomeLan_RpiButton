@@ -35,7 +35,7 @@ class ButtonManager:
         logger.info("Button button pressed")
 
         # Notify the alarm to orchestrator
-        notification_service.notify_alarm(alarm_type="emergency", msg="button pressed")
+        notification_service.notify_alarm(alarm_type="emergency_btn", msg="button pressed")
 
 button_manager_service: ButtonManager = ButtonManager()
 """ Button manager service singleton"""
