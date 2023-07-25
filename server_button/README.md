@@ -49,6 +49,11 @@ add line
 export PATH="$PATH:/home/pi/.local/bin"
 ```
 
+Install pijuice
+```bash
+sudo apt-get install pijuice-base
+```
+
 ## Add the WiGreen Wi-Fi network configuration
 
 Edit the file `wpa_supplicant.conf`
