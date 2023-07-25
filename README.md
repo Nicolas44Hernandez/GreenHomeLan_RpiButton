@@ -1,12 +1,6 @@
 # GreenHomeLan_RpiButton
-Button to notify something via Wifi over MQTT or via Thread to the orchestrator
 
-
-# RPI-Button
-
-# Use case : Button emergency resiliant notification
-
-This use case aims to show how a connected object can use the Wifi / Thread tecnology to notify an event
+This use case aims to show how a connected object can use the Wifi / Thread tecnology to notify an alarm
 
 ## **Topology**
 TODO: update image
@@ -31,6 +25,9 @@ This module is not part of the local network, it simulates a cloud web service.
 Connected object composed a doorbell, a camera and a presence sensor. This smart doorbell sends a notification and the live video stream to the cloud server (rpi_cloud) if someone rings the bell or the presence sensor detects something unusual.
 ## **rpi_button**
 Connected object composed a button. This emergency smart button sends a resiliant notification to the cloud server (rpi_cloud) via Wifi / Thread
+
+## [**rpi_buttons_actions**](https://github.com/Nicolas44Hernandez/GreenHomeLan_RpiButtons_Actions)
+Connected object composed a 2x2 matrix buttons. When a button is pressed, this object sends a message via thread to the orchestrator to request the execution of an specific command (the commands to run can be configured by the user).
 
 ## rpi_button installation and setup
 You can found the installation and setup in the iner [README.md](server_button/README.md) file

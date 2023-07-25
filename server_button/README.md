@@ -75,11 +75,7 @@ touch logs/app.log logs/thread.log logs/mqtt.log logs/button.log logs/wifi_conne
 
 # Hardware connection
 Connect the button to the RPI
-TODO: Make image
 ![RPI button connection](../images/rpi-button.png)
-
-# Set rpi-button as a service
-
 
 ## Configuration
 In the file `server_button/server/config/server-button-config.yml` set the rpi_box ip address
