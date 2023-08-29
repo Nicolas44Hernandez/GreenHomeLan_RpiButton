@@ -48,7 +48,7 @@ class ThreadManager:
                 return
 
             # send thread message to notify conncetion
-            self.send_thread_message_to_border_router("ka_cam")
+            self.send_thread_message_to_border_router("ka_bt2")
 
     # def schedule_thread_keep_alive_message_send(self):
     #     """Schedule KA thread message"""
