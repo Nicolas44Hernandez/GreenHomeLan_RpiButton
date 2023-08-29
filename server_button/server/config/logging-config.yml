@@ -38,25 +38,25 @@ root:
 loggers:
   server.app:
     level: INFO
-    handlers: [app]
+    handlers: [console]
     propagate: no
 
   server.managers.thread_manager:
     level: INFO
-    handlers: [thread]
+    handlers: [console]
     propagate: no
 
   server.managers.button_manager:
     level: INFO
-    handlers: [button]
+    handlers: [console]
     propagate: no
 
   server.interfaces.thread_interface:
     level: INFO
-    handlers: [thread]
+    handlers: [console]
     propagate: no
 
   server.interfaces.gpio_interface:
     level: INFO
-    handlers: [app]
+    handlers: [console]
     propagate: no

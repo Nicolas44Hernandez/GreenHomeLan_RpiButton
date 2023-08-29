@@ -8,8 +8,6 @@ logger = logging.getLogger(__name__)
 class AlarmNotifier:
     """Manager for AlarmNotifier"""
 
-    mqtt_alarm_notif_topic: str
-
     def __init__(self, app: Flask = None) -> None:
         if app is not None:
             self.init_app(app)
@@ -18,7 +16,6 @@ class AlarmNotifier:
         """Initialize AlarmNotifier"""
         if app is not None:
             logger.info("initializing the AlarmNotifier")
-            self.mqtt_alarm_notif_topic = app.config["MQTT_ALARM_NOTIFICATION_TOPIC"]
 
     def notify_alarm(self, alarm_type: str, msg: str):
         logger.info(f"Sending emergency alarm notification alarm:{alarm_type} msg:{msg}")
