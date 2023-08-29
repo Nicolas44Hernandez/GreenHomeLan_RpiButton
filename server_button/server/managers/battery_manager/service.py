@@ -25,7 +25,7 @@ class BatteryManager:
     def init_app(self, app: Flask) -> None:
         """Initialize BatteryManager"""
         if app is not None:
-            logger.info("initializing the ButtonsMatrixManager")
+            logger.info("initializing the BatteryManager")
 
             self.batery_interface = BatteryInterface()
             self.battery_polling_period_in_mins = app.config["PIJUICE_BAT_POLLING_PERIOD_IN_MINS"]
