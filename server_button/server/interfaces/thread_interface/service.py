@@ -13,7 +13,6 @@ SERIAL_READ_TIMEOUT_IN_SECS = 0.1
 class ThreadNode:
     """Service class for thread node"""
 
-    ipv6_otbr: str
     ipv6_mesh: str
     dataset_key: str
     serial: serial.Serial
@@ -35,17 +34,15 @@ class ThreadNode:
 
         self.thread_udp_port = thread_udp_port
         self.running = False
-        self.dataset_key = {}
+        self.dataset_key = None
 
-    def setup_thread_node(self, ipv6_otbr: str, ipv6_mesh: str, dataset_key: str) -> bool:
+    def setup_thread_node(self, ipv6_mesh: str, dataset_key: str) -> bool:
         """Thread node configuration and setup"""
 
         logger.info("Thread node setup")
-        logger.info(f"host_ipv6_addr: {ipv6_otbr}")
         logger.info(f"host_ipv6_mesh: {ipv6_mesh}")
         logger.info(f"dataset_key: {dataset_key}")
 
-        self.ipv6_otbr = ipv6_otbr
         self.ipv6_mesh = ipv6_mesh
         self.dataset_key = dataset_key
 
@@ -66,7 +63,8 @@ class ThreadNode:
 
             # Ping Thread border router
             logger.info("Ping thread border router")
-            self.send_serial_command(f"ping {self.ipv6_otbr}")
+            self.send_serial_command(f"ping {self.ipv6_mesh}")
+            # TODO: check ping for validate connection
 
             # Open UDP connection
             logger.info("Ope udp port")

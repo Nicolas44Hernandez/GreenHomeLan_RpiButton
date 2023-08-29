@@ -1,7 +1,6 @@
 import logging
 from timeloop import Timeloop
 from flask import Flask
-from server.managers.mqtt_manager import mqtt_manager_service
 from server.interfaces.thread_interface import ThreadInterface
 
 logger = logging.getLogger(__name__)
@@ -15,9 +14,9 @@ class ThreadManager:
     thread_interface: ThreadInterface
     serial_interface: str
     serial_speed: int
-    mqtt_thread_network_params_topic: str
-    thread_network_config: dict
     thread_udp_port: int
+    ipv6_mesh: str
+    dataset_key: str
 
     def __init__(self, app: Flask = None) -> None:
         if app is not None:
@@ -28,11 +27,11 @@ class ThreadManager:
         if app is not None:
             logger.info("initializing the ThreadManager")
             self.thread_interface = None
-            self.thread_network_config = None
             self.serial_interface = app.config["THREAD_SERIAL_INTERFACE"]
             self.serial_speed = app.config["THREAD_SERIAL_SPEED"]
             self.thread_udp_port = app.config["THREAD_UDP_PORT"]
-            self.mqtt_thread_network_params_topic = app.config["MQTT_THREAD_NETWORK_INFO_TOPIC"]
+            self.ipv6_mesh = app.config["THREAD_IPV6_MESH"]
+            self.dataset_key = app.config["THREAD_DATSET_KEY"]
 
             # Create Thread interface
             self.thread_interface = ThreadInterface(
@@ -41,37 +40,15 @@ class ThreadManager:
                 thread_udp_port=self.thread_udp_port,
             )
 
-            # Subscribe to relays command MQTT topic
-            mqtt_manager_service.subscribe_to_topic(
-                topic=self.mqtt_thread_network_params_topic,
-                callback=self.thread_network_params_callback,
-            )
-
-    def thread_network_params_callback(self, thread_network_config: dict):
-        """Callback for MQTT receive thread network params """ ""
-        if (
-            not self.thread_interface.running
-            or thread_network_config["dataset_key"] != self.thread_interface.dataset_key
-            or thread_network_config["ipv6_mesh"] != self.thread_interface.ipv6_mesh
-            or thread_network_config["ipv6_otbr"] != self.thread_interface.ipv6_otbr
-        ):
-            logger.info(f"Join Thread network, interface setup")
-            logger.info(f"Thread network params received: {thread_network_config}")
-
-            if self.thread_interface.setup_thread_node(
-                ipv6_otbr=thread_network_config["ipv6_otbr"],
-                ipv6_mesh=thread_network_config["ipv6_mesh"],
-                dataset_key=thread_network_config["dataset_key"],
+            if not self.thread_interface.setup_thread_node(
+                ipv6_mesh=self.ipv6_mesh,
+                dataset_key=self.dataset_key,
             ):
-                self.thread_network_config = thread_network_config
-            else:
-                self.thread_network_config = None
                 logger.error(f"Error in thread node setup")
+                return
 
             # send thread message to notify conncetion
             self.send_thread_message_to_border_router("ka_cam")
-            # Schedule periodic keep alive
-            # self.schedule_thread_keep_alive_message_send()
 
     # def schedule_thread_keep_alive_message_send(self):
     #     """Schedule KA thread message"""
@@ -93,11 +70,6 @@ class ThreadManager:
                 "Thread network not configured or not running, wating for network setup message"
             )
             logger.error("Message not published")
-
-    def get_thread_network_setup(self):
-        """Retrieve thread network config"""
-
-        return self.thread_network_config
 
 
 thread_manager_service: ThreadManager = ThreadManager()

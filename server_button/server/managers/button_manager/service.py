@@ -2,7 +2,6 @@ import logging
 import time
 from flask import Flask
 from server.interfaces.gpio_interface import GpioButtonInterface
-from server.managers.wifi_connection_manager import wifi_connection_manager_service
 from server.notification import notification_service
 
 logger = logging.getLogger(__name__)

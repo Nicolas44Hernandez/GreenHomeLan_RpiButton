@@ -1,7 +1,5 @@
 import logging
-from server.managers.mqtt_manager import mqtt_manager_service
 from server.managers.thread_manager import thread_manager_service
-from server.managers.wifi_connection_manager import wifi_connection_manager_service
 from flask import Flask
 
 logger = logging.getLogger(__name__)
@@ -25,26 +23,8 @@ class AlarmNotifier:
     def notify_alarm(self, alarm_type: str, msg: str):
         logger.info(f"Sending emergency alarm notification alarm:{alarm_type} msg:{msg}")
         """Notify alarm to orchestrator"""
-        if wifi_connection_manager_service.connected:
-            return self.notify_mqtt_alarm(alarm_type=alarm_type, msg=msg)
-        else:
-            return self.notify_thread_alarm(alarm_type=alarm_type)
+        return self.notify_thread_alarm(alarm_type=alarm_type)
 
-    def notify_mqtt_alarm(self, alarm_type: str, msg: str) -> bool:
-        """Send MQTT message to notify alarm"""
-        logger.info(f"Sending notification via MQTT")
-
-        alarm_data = {"type": alarm_type, "msg": msg}
-
-        if mqtt_manager_service.publish_message(
-            topic=self.mqtt_alarm_notif_topic, message=alarm_data
-        ):
-            logger.info(f"Alarm published to MQTT topic {self.mqtt_alarm_notif_topic}")
-            logger.info(f"Network info: {alarm_data}")
-            return True
-        else:
-            logger.error("Impossible to publish alarm to MQTT topic {self.mqtt_alarm_notif_topic}")
-            return False
 
     def notify_thread_alarm(self, alarm_type: str) -> bool:
         """Send Thread message to notify alarm"""
