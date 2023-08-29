@@ -5,6 +5,7 @@ from logging.config import dictConfig
 from os import path
 import yaml
 from flask import Flask
+from .managers.battery_manager import battery_manager_service
 from .managers.thread_manager import thread_manager_service
 from .managers.button_manager import button_manager_service
 from .notification import notification_service
@@ -48,6 +49,8 @@ def register_extensions(app: Flask):
     thread_manager_service.init_app(app=app)
     # Button manager extension
     button_manager_service.init_app(app=app)
+    # Battery manager extension
+    battery_manager_service.init_app(app=app)
     # Notification extension
     notification_service.init_app(app=app)
 
