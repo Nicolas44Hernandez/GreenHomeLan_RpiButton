@@ -52,7 +52,10 @@ class ThreadManager:
                 return
 
             # send thread message to notify conncetion
-            self.send_thread_message_to_border_router("ka_bt2")
+            self.send_keep_alive_message()
+
+            # Schedule keep alive messages
+            self.schedule_thread_keep_alive_message_send()
 
 
     def send_thread_message_to_border_router(self, message: str):
